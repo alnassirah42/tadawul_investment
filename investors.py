@@ -1,6 +1,11 @@
 """
 list of user defined investing strategies 
 
+list of available investors: 
+    1. lucky   : invests every month at the lowest price date
+    1. unlucky : invests every month at the highest price date
+    1. som     : invests every month at the beginning of the month 
+    1. random  : invests every month at random date
 """
 
 
