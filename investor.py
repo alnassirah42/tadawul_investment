@@ -13,7 +13,7 @@ class Investor:
         self.amount_spent = 0 
         self.portfolio = [];#[self.current_money];
         self.stock_profit = pd.DataFrame(
-                columns=['name','date','symbol','avg_cost','current_price','profit/share','profit','pct'])
+                columns=['name','as_of_date','symbol','avg_cost','current_price','profit/share','profit','pct'])
 
         self.transaction_history = pd.DataFrame(
                 columns=['date','YM','symbol','action','shares','price','total','dca'])
@@ -113,8 +113,10 @@ profit          :\n{self.profit.iloc[-1]}
 
     def computeAnnualReturn(self):
         investor_profit = self.stock_profit
-        investor_profit['year'] = investor_profit['date'].apply(lambda v: v.strftime('%Y'))
-        investor_profit = investor_profit.merge(investor_profit.groupby(['year'],as_index=False)['date'].max(),on=['year','date'])
+        investor_profit['year'] = investor_profit['as_of_date'].apply(lambda v: v.strftime('%Y'))
+        investor_profit = investor_profit.merge(investor_profit.groupby(['year'],
+                                                                        as_index=False)['as_of_date'].max(),
+                                                on=['year','as_of_date'])
         return investor_profit
 
 
