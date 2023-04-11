@@ -23,8 +23,12 @@ class Investor:
 name            : {self.name}
 money held      : {self.current_money:,.2f}
 total spent     : {self.amount_spent:,.2f}
+avg spent/month : {self.transaction_history.groupby(['YM'])['price'].sum().mean():,.2f}
+total shares    : {self.transaction_history['shares'].sum():.0f}
+total stocks    : {self.transaction_history['symbol'].nunique():.0f}
 total in stocks : {self.portfolio[-1]:,.2f}
-profit          :\n{self.profit.iloc[-1]}
+total profit    : {self.profit['total profit'].iloc[-1]:,.2f}
+profit pct      : {self.profit['profit pct'].iloc[-1]*100:,.2f}%
     """ 
     # + "\n" + '-'*40 + "\n" + self.transaction_history.__str__()
 
@@ -95,7 +99,8 @@ profit          :\n{self.profit.iloc[-1]}
                                           ignore_index=True)
 
     def logTransaction(self,symbol,shares,price,date,action):
-
+        if shares == 0:
+            print(self.name,symbol,shares,price)
         price_h = self.transaction_history[self.transaction_history["symbol"]==symbol]['price']
         shares_h = self.transaction_history[self.transaction_history["symbol"]==symbol]['shares']
         avg_cost = ((price_h*shares_h).sum() + price*shares)/(shares_h.sum()+shares)
@@ -124,7 +129,8 @@ profit          :\n{self.profit.iloc[-1]}
         """
         buy #{shares} from symbol at {price} 
         """
-        if self.current_money > shares*price: 
+
+        if (self.current_money > shares*price) and shares > 0: 
             self.amount_spent = self.amount_spent + shares*price; 
             self.stocks[symbol] = self.stocks.get(symbol,0) + shares 
             self.current_money = self.current_money - shares*price;
