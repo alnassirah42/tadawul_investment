@@ -75,8 +75,9 @@ profit          :\n{self.profit.iloc[-1]}
             shares = shares.sum()
 
             self.stock_profit = self.stock_profit.append({'name':self.name,
-                                                          'date':stocks['date'],
+                                                          'as_of_date':stocks['date'],
                                                           'symbol': symbol,
+                                                          'shares' : shares,
                                                           'avg_cost': avg_cost, # average cost as of date 
                                                           'current_price': current_price,
                                                           'profit/share': current_price - avg_cost ,
