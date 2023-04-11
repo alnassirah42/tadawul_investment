@@ -20,12 +20,13 @@ class Investor:
 
     def __str__(self):
         return f"""
-name          : {self.name}
-money held    : {self.current_money:,.2f}
-total spent   : {self.amount_spent:.2f}
-profit        :\n {self.profit.iloc[-1]}
-
-    """ + "\n" + '-'*40 + "\n" + self.transaction_history.__str__()
+name            : {self.name}
+money held      : {self.current_money:,.2f}
+total spent     : {self.amount_spent:,.2f}
+total in stocks : {self.portfolio[-1]:,.2f}
+profit          :\n{self.profit.iloc[-1]}
+    """ 
+    # + "\n" + '-'*40 + "\n" + self.transaction_history.__str__()
 
     def depositMoney(self,amount):
         """
