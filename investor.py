@@ -13,7 +13,7 @@ class Investor:
         self.amount_spent = 0 
         self.portfolio = [];#[self.current_money];
         self.stock_profit = pd.DataFrame(
-                columns=['name','as_of_date','symbol','avg_cost','current_price','profit/share','profit','pct'])
+                columns=['name','as_of_date','symbol','avg_cost','current_price','profit/share','profit','pct','shares','total_value','total_cost'])
 
         self.transaction_history = pd.DataFrame(
                 columns=['date','YM','symbol','action','shares','price','total','dca'])
@@ -29,6 +29,8 @@ total stocks    : {self.transaction_history['symbol'].nunique():.0f}
 total in stocks : {self.portfolio[-1]:,.2f}
 total profit    : {self.profit['total profit'].iloc[-1]:,.2f}
 profit pct      : {self.profit['profit pct'].iloc[-1]*100:,.2f}%
+periodic return : {(self.portfolio[-1] -self.amount_spent)/self.amount_spent/self.transaction_history.shape[0]*100:.2f}% 
+ann. total return: {((self.stock_profit['total_value']/self.stock_profit['total_cost']).iloc[-1]**(1/self.stock_profit.shape[0])-1)*100:.2f}%
     """ 
     # + "\n" + '-'*40 + "\n" + self.transaction_history.__str__()
 
@@ -81,12 +83,14 @@ profit pct      : {self.profit['profit pct'].iloc[-1]*100:,.2f}%
             self.stock_profit = self.stock_profit.append({'name':self.name,
                                                           'as_of_date':stocks['date'],
                                                           'symbol': symbol,
-                                                          'shares' : shares,
                                                           'avg_cost': avg_cost, # average cost as of date 
                                                           'current_price': current_price,
                                                           'profit/share': current_price - avg_cost ,
                                                           'profit' : (current_price - avg_cost)*shares,
                                                           'pct' : np.round((current_price - avg_cost)/avg_cost,2),    
+                                                          'shares' : shares,
+                                                          'total_value': shares*current_price,
+                                                          'total_cost':shares*avg_cost,
                                                          },
                                                          ignore_index=True)
 
@@ -94,7 +98,9 @@ profit pct      : {self.profit['profit pct'].iloc[-1]*100:,.2f}%
         self.profit = self.profit.append({'date':stocks['date'],
                                           'YM': stocks['date'].strftime('%Y-%m'),
                                           'total profit': np.round(running_profit,2),
-                                          'profit pct': np.round(running_profit/self.amount_spent,4)
+                                          'profit pct': np.round(running_profit/self.amount_spent,4),
+                                          'running_profit': np.round(running_profit,4),
+                                          'amount_spent': np.round(self.amount_spent,4),
                                           },
                                           ignore_index=True)
 
@@ -139,7 +145,7 @@ profit pct      : {self.profit['profit pct'].iloc[-1]*100:,.2f}%
         else: 
             if self.verbose:
                 print("not enough money in wallet")
-                print(f"wallet: {self.current_money}, needed = {shares*price}")
+                print(self.name,f"wallet: {self.current_money}, needed = {shares}*{price} {shares*price}")
         
     def sell(self,symbol,shares,price,date=None):
         """
