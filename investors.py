@@ -19,8 +19,8 @@ list of available investors:
 from investor import Investor
 
 class luckyInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares):
         """
@@ -46,8 +46,8 @@ class luckyInvestor(Investor):
 #         self.calculateProfit(stocks)
 
 class unluckyInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares):
         """
@@ -61,8 +61,8 @@ class unluckyInvestor(Investor):
                  buy_at['date'])
 
 class randomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares):
         """
@@ -76,8 +76,8 @@ class randomInvestor(Investor):
                  buy_at['date'])
 
 class somInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares):
         """
@@ -91,8 +91,8 @@ class somInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountLuckyInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -119,8 +119,8 @@ class fixedAmountLuckyInvestor(Investor):
 #         self.calculateProfit(stocks)
 
 class fixedAmountUnluckyInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -135,8 +135,8 @@ class fixedAmountUnluckyInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountRandomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -151,8 +151,8 @@ class fixedAmountRandomInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountRandomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -167,8 +167,8 @@ class fixedAmountRandomInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountRandomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -185,8 +185,8 @@ class fixedAmountRandomInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountRandomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -203,8 +203,8 @@ class fixedAmountRandomInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountSomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -221,8 +221,8 @@ class fixedAmountSomInvestor(Investor):
                  buy_at['date'])
 
 class fixedAmountRandomInvestor(Investor):
-    def __init__(self,name,init_deposit):
-        super().__init__(name,init_deposit)
+    def __init__(self,name,init_deposit,verbose):
+        super().__init__(name,init_deposit,verbose)
         
     def buyLogic(self,symbol,shares,stock_amount):
         """
@@ -230,6 +230,7 @@ class fixedAmountRandomInvestor(Investor):
         lucky investor will always pick the day with the lowest price
         """
         buy_at = symbol.sample().iloc[0]
+
         shares = stock_amount//buy_at['price']
         if shares < 1:
             return 
